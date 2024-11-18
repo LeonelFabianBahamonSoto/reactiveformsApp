@@ -32,5 +32,11 @@ export class BasicPageComponent implements OnInit {
     onSaveForm = (): void => {
         if(this.myForm.invalid) return;
         console.info('FORM: ',this.myForm.value);
+
+        this.myForm.reset({
+            productName: 'RESET',
+            price: 1,
+            inStorage: 1,
+        });
     };
 }
