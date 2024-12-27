@@ -1,89 +1,101 @@
-<h2>Reactivos: <small> Dinámicos </small></h2>
-<hr>
+<app-side-menu>
+    <h2>Reactivos: <small> Dinámicos </small></h2>
+    <hr>
 
-<form autocomplete="off">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+        <div class="sm:col-span-1 md:col-span-1 lg:col-span-1" style="background-color: gray;">
+            <span>Valid</span>
+            <pre>{{ dynamicForm.valid | json }}</pre>
 
-    <!-- Nombre -->
-    <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Nombre</label>
-        <div class="col-sm-9">
-            <input class="form-control"
-                   placeholder="Nombre de la persona">
-            <span class="form-text text-danger">
-                   error message
-            </span>
+            <span>Pristine</span>
+            <pre>{{ dynamicForm.pristine| json }}</pre>
+
+            <span>Touched</span>
+            <pre>{{ dynamicForm.touched| json }}</pre>
+
+            <span>Value</span>
+            <pre>{{ dynamicForm.value| json }}</pre>
+
+            <!-- <span>Precio</span>
+            <pre>{{ dynamicForm.controls['price'].value | json }}</pre> -->
+
+            <!-- <span>Precio - Errors</span>
+            <div style="overflow: auto;">{{ dynamicForm.controls['price'].errors | json }}</div> -->
+
+            <!-- <span>Producto 1</span>
+            <div style="overflow: auto;">{{ dynamicForm.controls['name'].value | json }}</div> -->
+
+            <!-- <span>Producto</span>
+            <div>{{ dynamicForm.controls['name'].errors | json }}</div> -->
         </div>
-    </div>
 
-    <!-- Agregar Favorito -->
-    <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Agregar</label>
-        <div class="col-sm-9">
+        <div class="sm:col-span-1 md:col-span-2 lg:col-span-2">
+            <form [formGroup]="dynamicForm" (ngSubmit)="onSaveForm()" autocomplete="off" class="formContainer">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-2 gap-1">
 
-            <div class="input-group">
-                <input class="form-control"
-                       placeholder="Agregar favorito">
+                    <div class="col-span-1" style="display: flex; width: 100%; ">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre de la persona</mat-label>
+                            <input class="form-control" formControlName="personName" matInput placeholder="Nombre de la persona" type="text">
 
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'required'})">
+                                El nombre del producto es requerido
+                            </mat-error>
 
-                <button class="btn btn-outline-primary"
-                        type="button">
-                    Agregar favorito
-                </button>
-            </div>
-        </div>
-    </div>
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'minlength'})">
+                                El nombre del producto requiere minimo 3 letras
+                            </mat-error>
 
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'maxlength'})">
+                                El nombre del producto requiere máximo de 10 letras
+                            </mat-error>
 
-    <!-- Lista de Juegos Favoritos -->
-    <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Favoritos</label>
-        <div class="col-sm-9">
+                        </mat-form-field>
+                    </div>
 
-            <div class="mb-1">
+                    <div class="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Favorite Games</mat-label>
+                            <input class="form-control" formControlName="price" matInput placeholder="Precio del producto" type="number">
 
-                <div class="input-group">
-                    <input class="form-control">
+                            <mat-error *ngIf="isValidField({ theField: 'price', theError: 'min'})">
+                                El precio del producto minimo es de 100
+                            </mat-error>
 
-                    <button class="btn btn-outline-danger"
-                            type="button">
-                      Eliminar
-                  </button>
+                            <mat-error *ngIf="isValidField({ theField: 'price', theError: 'max'})">
+                                El precio del producto máximo es de 1'000.000
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Existencias</mat-label>
+                            <input class="form-control" formControlName="inStorage" matInput placeholder="Existencias del producto" type="number">
+
+                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'required'})">
+                                Las existencias del producto es requerido
+                            </mat-error>
+
+                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'min'})">
+                                Las existencias del producto minimo debe ser de 1
+                            </mat-error>
+
+                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'max'})">
+                                Las existencias del producto minimo debe ser de 100
+                            </mat-error>
+                        </mat-form-field>
+                    </div> -->
+
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-4">
+                        <button mat-fab extended type="submit">
+                            Guardar
+                            <mat-icon>save</mat-icon>
+                        </button>
+                    </div>
                 </div>
-                <span class="form-text text-danger">
-                   Este campo es requerido
-                </span>
-
-            </div>
-
+            </form>
         </div>
     </div>
 
-
-
-    <div class="row">
-        <div class="col-sm-12">
-            <button type="submit"
-                    class="btn btn-primary float-end"
-                    >
-                    <!-- [disabled]="myForm.invalid" -->
-                Guardar
-            </button>
-        </div>
-    </div>
-
-
-</form>
-
-
-
-<span>Valid</span>
-<pre>{{ 'object' | json }}</pre>
-<br>
-
-<span>Value</span>
-<pre>{{ 'object' | json }}</pre>
-<br>
-
-<span>Agregar Juego</span>
-<pre>{{ 'object' | json }}</pre>
-<pre>{{ 'object' | json }}</pre>
+</app-side-menu>

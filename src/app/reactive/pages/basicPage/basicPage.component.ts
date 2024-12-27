@@ -8,6 +8,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
     styleUrls: ["./basicPage.component.sass"],
 })
 export class BasicPageComponent implements OnInit {
+
+    constructor( private fb: FormBuilder ) {}
+
     // readonly product = new FormControl("", [Validators.required]);
 
     //FORMA LARGA DE HACERLO QUE SE REMPLAZA POR LA DE ABAJO
@@ -17,7 +20,11 @@ export class BasicPageComponent implements OnInit {
     //     storage: new FormControl(0, [], []),
     // });
 
-    constructor( private fb: FormBuilder ) {}
+    public myForm: FormGroup = this.fb.group({
+        productName: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(11)], []],
+        price: ['',[Validators.required, Validators.min(100), Validators.max(1000001)],[]],
+        inStorage: ['',[Validators.required, Validators.min(1), Validators.max(101)],[]],
+    });
 
     ngOnInit(): void {
         this.myForm.reset({ productName: '', price: 0, inStorage: 0 });
@@ -31,12 +38,6 @@ export class BasicPageComponent implements OnInit {
     isValidField = ({ theField = '', theError = '' }): boolean => {
         return this.myForm.get(theField)?.errors?.[theError];
     }
-
-    public myForm: FormGroup = this.fb.group({
-        productName: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(11)], []],
-        price: ['',[Validators.required, Validators.min(100), Validators.max(1000001)],[]],
-        inStorage: ['',[Validators.required, Validators.min(1), Validators.max(101)],[]],
-    });
 
     onSaveForm = (): void => {
         this.myForm.markAllAsTouched();

@@ -73,37 +73,21 @@
 </mat-drawer-container> -->
 
 <mat-sidenav-container style="height: 100vh;">
-    <mat-sidenav
-        #sidenav
-        class="example-sidenav"
-        mode="over"
-    >
+    <mat-sidenav #sidenav class="example-sidenav" mode="over">
         <div class="sidenav-content">
             <div class="menu-content">
                 <h1>Forms Options</h1>
 
                 <mat-nav-list>
                     Reactive Forms
-                    <mat-list-item
-                        *ngFor="let item of sidebarReactiveItems"
-                        [routerLink]="item.url"
-                        (click)="sidenav.toggle()"
-                    >
-                        <mat-icon
-                            matListItemIcon
-                            id="buttonIcon"
-                        >
+                    <mat-list-item *ngFor="let item of sidebarReactiveItems" [routerLink]="item.url" (click)="sidenav.toggle()">
+                        <mat-icon matListItemIcon id="buttonIcon">
                             {{ item.icon }}
                         </mat-icon>
-                        <div
-                            class="buttonTitle"
-                        >
+                        <div class="buttonTitle">
                             {{ item.label }}
                         </div>
-                        <div
-                            class="buttonSubTitle"
-                            *ngIf="item.description"
-                        >
+                        <div class="buttonSubTitle" *ngIf="item.description">
                             {{ item.description }}
                         </div>
                     </mat-list-item>
@@ -111,15 +95,8 @@
 
                 <mat-nav-list>
                     Validations
-                    <mat-list-item
-                        *ngFor="let item of sidebarValidations"
-                        [routerLink]="item.url"
-                        (click)="sidenav.toggle()"
-                    >
-                        <mat-icon
-                            id="buttonIcon"
-                            matListItemIcon
-                        >
+                    <mat-list-item *ngFor="let item of sidebarValidations" [routerLink]="item.url" (click)="sidenav.toggle()">
+                        <mat-icon id="buttonIcon" matListItemIcon>
                             {{ item.icon }}
                         </mat-icon>
                         <span style="color: white;">{{ item.label }}</span>
@@ -136,12 +113,16 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="contentContainer">
-        <mat-toolbar class="toolbarStyle">
-            <button type="button" mat-button (click)="sidenav.toggle()">
-                <mat-icon style="color: white;">menu</mat-icon>
-            </button>
-            <span style="color: white;">Reactive Forms</span>
-        </mat-toolbar>
+        <div class="toolbar-wrapper">
+            <mat-toolbar class="toolbarStyle">
+                <button type="button" mat-button (click)="sidenav.toggle()">
+                    <mat-icon style="color: white;">menu</mat-icon>
+                </button>
+                <span style="color: white;">Reactive Forms</span>
+            </mat-toolbar>
+        </div>
+        <!-- <div style="flex: 1; background-color: pink;">
+        </div> -->
         <div class="sidenavContent">
             <ng-content></ng-content>
         </div>
