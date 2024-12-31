@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
     selector: "app-basic-page",
@@ -37,6 +37,11 @@ export class BasicPageComponent implements OnInit {
 
     isValidField = ({ theField = '', theError = '' }): boolean => {
         return this.myForm.get(theField)?.errors?.[theError];
+    }
+
+    isValidFieldInArray = ( formArray: FormArray, index: number ): boolean => {
+        // return this.myForm.get(theField)?.errors?.[theError];
+        return false;
     }
 
     onSaveForm = (): void => {
