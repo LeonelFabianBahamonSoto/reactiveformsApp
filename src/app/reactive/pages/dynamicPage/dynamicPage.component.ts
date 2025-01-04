@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-dynamic-page',
@@ -10,43 +10,79 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class DynamicPageComponent {
 
-    constructor( private fb: FormBuilder ) {};
+    constructor( private fb: FormBuilder ) {
+        console.info('newFavoriteGame: ', this.newFavoriteGame?.value);
+    };
 
-    dynamicForm: FormGroup = this.fb.group({
-        personName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)], []],
+    public minLengthFavoriteCharacters: number = 2;
+    public maxLengthFavoriteCharacters: number = 15;
+    public messageErrorResponse: string = '';
+
+    public dynamicForm: FormGroup = this.fb.group({
+        personName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)], []],
         favoriteGames: this.fb.array([
-            ['Metal Gear', Validators.required],
-            ['DeadPool', Validators.required],
+            ['Metal Gear',[ Validators.required, Validators.minLength(2), Validators.maxLength(15) ]],
+            ['DeadPool', [ Validators.required, Validators.minLength(2), Validators.maxLength(15) ]],
         ]),
     });
+
+    public newFavoriteGame: FormControl = new FormControl( '', [ Validators.minLength(3), Validators.maxLength(15) ] );
+
+    get favoriteGamesControl() {
+        return this.dynamicForm?.controls['favoriteGames'] as FormArray;
+    };
 
     isValidField = ({ theField = '', theError = '' }): boolean => {
         return this.dynamicForm.get(theField)?.errors?.[theError];
     };
 
-    isValidFieldInArray = ({ theFieldArrayIndex = 0, theError = '' }): boolean => {
-        console.info('theFieldArrayIndex: ', theFieldArrayIndex, '\ntheError: ', theError, '\nEXPRESSION: ', 
-            this.dynamicForm?.controls[theFieldArrayIndex]?.errors
+    isValidFieldInArray = ( formArray: FormArray, index: number ): boolean => {
+        const control = formArray.controls[index] || false;
+
+        control?.statusChanges.subscribe(() => {
+            const isError = control?.errors;
+
+            if( isError?.['minlength'] ){
+                this.messageErrorResponse = `El nombre debe ser minimo de ${ this.minLengthFavoriteCharacters } caracteres`;
+                control.markAsTouched();
+            } else if( isError?.['maxlength'] ){
+                this.messageErrorResponse = `El nombre del juego requiere máximo de ${ this.maxLengthFavoriteCharacters } caracteres`;
+                control.markAsTouched();
+            } else {
+                this.messageErrorResponse = `El campo es requerido`;
+                control.markAsTouched();
+            };
+        });
+
+        return control.invalid && (control.dirty || control.touched);
+    };
+
+    addFavoriteGame = () => {
+        if( this.newFavoriteGame.invalid || this.newFavoriteGame.value.length < this.minLengthFavoriteCharacters ) return;
+
+        this.favoriteGamesControl.push(
+            this.fb.control( this.newFavoriteGame.value, [ Validators.required, Validators.minLength(2), Validators.maxLength(15) ] )
         );
-        return false;
-        // return this.dynamicForm.get(theField)?.errors?.[theError];
+
+        this.newFavoriteGame.reset();
     };
 
-    deleteItemFromArray = ( i: any ) => {
-        console.info('DELETE ITEM i: ', i);
+    deleteItemFromArray = ( favoriteArrayIndex: number ) => {
+        this.favoriteGamesControl.removeAt( favoriteArrayIndex );
     };
-
-    get favoriteGamesControl() {
-        return this.dynamicForm.get('favoriteGames') as FormArray;
-    }
 
     onSaveForm = (): void => {
         if( this.dynamicForm.invalid ){
-            console.info('----> INVALID FORM');
             this.dynamicForm.markAllAsTouched();
-            this.dynamicForm.reset();
             return;
-        }
+        };
+
+        console.info('---> FORM: ', this.dynamicForm.value);
+
+        this.dynamicForm.reset({
+            personName: '',
+            favoriteGames: ['Metal Gear', 'DeadPool'],
+        });
     };
 
 }

@@ -52,42 +52,26 @@
                         </mat-form-field>
                     </div>
 
-                    <!-- Agregar Favorito -->
-                    <!-- <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label">Agregar</label>
-                        <div class="col-sm-9">
-
-                            <div class="input-group">
-                                <input class="form-control"
-                                    [formControl]="newFavorite"
-                                    placeholder="Agregar favorito"
-                                >
-
-
-                                <button (click)="onAddToFavorites()"
-                                        class="btn btn-outline-primary"
-                                        type="button">
-                                    Agregar favorito
-                                </button>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3">
                         <div style="display: flex; flex-direction: row;">
-                            <mat-form-field formControlName="favoriteGames" appearance="fill">
+                            <mat-form-field appearance="fill">
                                 <mat-label>Agregar juego favorito</mat-label>
-                                <input class="form-control" matInput type="text" placeholder="Nuevo juego favorito" type="text">
-                                <!-- <mat-error *ngIf="isValidFieldInArray({ theFieldArrayIndex = '', theError: 'minlength'})">
-                                    El nombre del juego requiere máximo de 2 letras
-                                </mat-error> -->
+                                <input class="form-control" matInput type="text" placeholder="Nuevo juego favorito" type="text" [formControl]="newFavoriteGame" (input)="newFavoriteGame.markAsTouched()">
 
-                                <!-- <mat-error *ngIf="isValidFieldInArray({ theField: 'favoriteGames', theError: 'maxlength'})">
-                                    El nombre del juego requiere máximo de 20 letras
-                                </mat-error> -->
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['minlength']">
+                                    El nombre del juego requiere mínimo de 3 letras
+                                </mat-error>
+
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['maxlength']">
+                                    El nombre del juego requiere máximo de 15 letras
+                                </mat-error>
+
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['required']">
+                                    El campo es requerido
+                                </mat-error>
 
                             </mat-form-field>
-                            <button mat-fab extended aria-label="Add favorite game" style="background-color: #008000; width: 25%; margin-left: 2.5%;">
+                            <button (click)="addFavoriteGame()" aria-label="Add favorite game" extended mat-fab type="button" [disabled]="newFavoriteGame.invalid" [ngClass]="{ unavailableButton : newFavoriteGame.invalid, availableButton: !newFavoriteGame.invalid}">
                                 Agregar
                                 <mat-icon>add_circle</mat-icon>
                             </button>
@@ -96,18 +80,14 @@
                     </div>
 
                     <div class="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-2" formArrayName="favoriteGames">
-                        <div style="display: flex; flex-direction: row;" *ngFor="let favoriteGames of favoriteGamesControl.controls; let i = index">
+                        <div style="display: flex; flex-direction: row;" *ngFor="let favoriteGamesForm of favoriteGamesControl.controls; let i = index">
                             <mat-form-field appearance="fill">
 
                                 <mat-label>Favorite Games</mat-label>
-                                <input class="form-control" formControlName="favoriteGames" matInput placeholder="Juego favorito" type="text" [formControlName]="i">
+                                <input class="form-control" matInput placeholder="Juego favorito" type="text" [formControlName]="i">
 
-                                <mat-error *ngIf="isValidField({ theField: 'favoriteGames', theError: 'min'})">
-                                    El nombre debe ser minimo de 2 caracteres
-                                </mat-error>
-
-                                <mat-error *ngIf="isValidFieldInArray({ theFieldArrayIndex: i, theError: 'minlength'})">
-                                    El nombre del juego requiere máximo de 2 letras
+                                <mat-error *ngIf="isValidFieldInArray( favoriteGamesControl, i )">
+                                    {{ messageErrorResponse }}
                                 </mat-error>
                             </mat-form-field>
 
@@ -117,26 +97,6 @@
                             </button>
                         </div>
                     </div>
-
-
-                    <!-- <div class="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Existencias</mat-label>
-                            <input class="form-control" formControlName="inStorage" matInput placeholder="Existencias del producto" type="number">
-
-                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'required'})">
-                                Las existencias del producto es requerido
-                            </mat-error>
-
-                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'min'})">
-                                Las existencias del producto minimo debe ser de 1
-                            </mat-error>
-
-                            <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'max'})">
-                                Las existencias del producto minimo debe ser de 100
-                            </mat-error>
-                        </mat-form-field>
-                    </div> -->
 
                     <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-4">
                         <button mat-fab extended type="submit" style="background-color:  #0066cc;">

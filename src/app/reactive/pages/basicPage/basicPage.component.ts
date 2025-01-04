@@ -39,10 +39,10 @@ export class BasicPageComponent implements OnInit {
         return this.myForm.get(theField)?.errors?.[theError];
     }
 
-    isValidFieldInArray = ( formArray: FormArray, index: number ): boolean => {
-        // return this.myForm.get(theField)?.errors?.[theError];
-        return false;
-    }
+    // isValidFieldInArray = ( formArray: FormArray, index: number ): boolean => {
+    //     // return this.myForm.get(theField)?.errors?.[theError];
+    //     return false;
+    // }
 
     onSaveForm = (): void => {
         this.myForm.markAllAsTouched();
