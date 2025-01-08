@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-dynamic-page',
     templateUrl: './dynamicPage.component.html',
     styleUrls: ['./dynamicPage.component.sass'],
-    // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class DynamicPageComponent {
