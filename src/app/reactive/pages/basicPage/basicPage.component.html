@@ -1,0 +1,131 @@
+<app-side-menu>
+    <h2>Reactivos: Básicos</h2>
+    <hr>
+
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2" style="height: 85vh;">
+        <div class="form-debug-container">
+            <span>Valid</span>
+            <pre>{{ myForm.valid | json }}</pre>
+
+            <span>Pristine</span>
+            <pre>{{ myForm.pristine| json }}</pre>
+
+            <span>Touched</span>
+            <pre>{{ myForm.touched| json }}</pre>
+
+            <span>Value</span>
+            <pre>{{ myForm.value| json }}</pre>
+
+            <span>Precio</span>
+            <div style="overflow: auto;">{{ myForm.controls['price'].value | json }}</div>
+
+            <span>Precio - Errors</span>
+            <div style="overflow: auto;">{{ myForm.controls['price'].errors | json }}</div>
+
+            <!-- <span>Producto 1</span>
+            <div style="overflow: auto;">{{ myForm.controls['name'].value | json }}</div> -->
+
+            <!-- <span>Producto</span>
+            <div>{{ myFormII.controls['name'].errors | json }}</div> -->
+        </div>
+
+        <!-- "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2" -->
+
+        <form [formGroup]="myForm" (ngSubmit)="onSaveForm()" autocomplete="off" class="sm:col-span-1 md:col-span-2 lg:col-span-2 formContainer">
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-span-2 gap-1">
+
+                <div class="col-span-1" style="display: flex; width: 100%; ">
+                    <!-- Campo de producto -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Producto</mat-label>
+                        <input class="form-control" formControlName="productName" matInput placeholder="Nombre del producto" type="text">
+
+                        <!-- <mat-error *ngIf="myForm.get('productName')?.errors?.['required']">
+                            El nombre del producto es requerido
+                        </mat-error> -->
+
+                        <mat-error *ngIf="isValidField({ theField: 'productName', theError: 'required'})">
+                            El nombre del producto es requerido
+                        </mat-error>
+
+                        <mat-error *ngIf="isValidField({ theField: 'productName', theError: 'minlength'})">
+                            El nombre del producto requiere minimo 3 letras
+                        </mat-error>
+
+                        <mat-error *ngIf="isValidField({ theField: 'productName', theError: 'maxlength'})">
+                            El nombre del producto requiere máximo de 10 letras
+                        </mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1">
+                    <!-- Campo de precio -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Precio</mat-label>
+                        <input class="form-control" formControlName="price" matInput placeholder="Precio del producto" type="number">
+
+                        <!-- <mat-error *ngIf="isValidField({ theField: 'price', theError: 'required'})">
+                            El precio del producto es requerido
+                        </mat-error> -->
+
+                        <!-- <mat-error *ngIf="myForm.get('price')?.errors?.['min']">
+                            El precio del producto minimo es de 100
+                        </mat-error> -->
+
+                        <mat-error *ngIf="isValidField({ theField: 'price', theError: 'min'})">
+                            El precio del producto minimo es de 100
+                        </mat-error>
+
+                        <mat-error *ngIf="isValidField({ theField: 'price', theError: 'max'})">
+                            El precio del producto máximo es de 1'000.000
+                        </mat-error>
+
+                        <!-- <mat-error
+                            *ngIf="price.invalid && (price.dirty || price.touched)"
+                        >
+                            El precio debe de ser 0 o mayor
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+                <div class="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1">
+                    <!-- Campo de existencias -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Existencias</mat-label>
+                        <input class="form-control" formControlName="inStorage" matInput placeholder="Existencias del producto" type="number">
+
+                        <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'required'})">
+                            Las existencias del producto es requerido
+                        </mat-error>
+
+                        <!-- <mat-error *ngIf="myForm.get('inStorage')?.errors?.['min']">
+                            Las existencias del producto minimo debe ser de 1
+                        </mat-error> -->
+
+                        <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'min'})">
+                            Las existencias del producto minimo debe ser de 1
+                        </mat-error>
+
+                        <mat-error *ngIf="isValidField({ theField: 'inStorage', theError: 'max'})">
+                            Las existencias del producto minimo debe ser de 100
+                        </mat-error>
+
+                        <!-- <mat-error
+                            *ngIf="product.invalid && (product.dirty || product.touched)"
+                        >
+                            Las existencias deben de ser 0 o mayor
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+
+                <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-4">
+                    <button mat-fab extended type="submit">
+                        Guardar
+                        <mat-icon>save</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-side-menu>

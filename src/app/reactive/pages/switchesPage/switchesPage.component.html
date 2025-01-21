@@ -1,0 +1,75 @@
+<app-side-menu>
+    <h2>Reactivos: Switches</h2>
+    <hr>
+
+    <form autocomplete="off" [formGroup]="switchesForm" (ngSubmit)="onSave()" style="background-color: #aed6f1;">
+
+        <!-- Radio -->
+        <div class="boxContainer mt-1">
+            <label class="textTitle">Género</label>
+            <div class="switchesContainer">
+                <div class="form-check">
+                    <input class="form-check-input" formControlName="gender" type="radio" value="M" id="radioMasculino">
+                    <label class="form-check-label" for="radioMasculino">
+                        Masculino
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" formControlName="gender" type="radio" value="F" id="radioFemenino">
+                    <label class="form-check-label" for="radioFemenino">
+                        Femenino
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Switches -->
+        <div class="boxContainer mt-1">
+            <label class="textTitle">Notificaciones</label>
+            <div class="switchesContainer">
+                <p>
+                    <mat-slide-toggle formControlName="wantNotification">Quiero recibir notificaciones</mat-slide-toggle>
+                </p>
+
+                <!-- <p>
+                    <mat-slide-toggle labelPosition="before" formControlName="termsAndCondition">Términos y condiciones de uso</mat-slide-toggle>
+                </p> -->
+                <mat-checkbox class="" formControlName="termsAndCondition">Términos y condiciones de uso</mat-checkbox>
+                <br>
+                <!-- <mat-error *ngIf="!switchesForm.get('termsAndCondition')?.value && switchesForm.get('termsAndCondition')?.touched"> -->
+                <mat-error *ngIf="termsAndConditionValidation()">
+                    Debes aceptar los términos y condiciones
+                </mat-error>
+            </div>
+        </div>
+
+        <!-- Boton submit -->
+        <div class="row" style="width: 100%; display: flex; justify-content: center;  ">
+            <div class="col" style="margin-top: 1%; margin-bottom: 1%;">
+                <button mat-fab extended type="submit" [disabled]="!onSubmitButtonEnable" [ngClass]="{ unavailableButton: !onSubmitButtonEnable, availableButton: onSubmitButtonEnable }">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <h5>Valor del formulario</h5>
+    <pre>{{ 'IS VALID FORM: ' | json }}</pre>
+    <br>
+
+    <h5>Persona</h5>
+    <pre>{{ 'object' | json }}</pre>
+    <br>
+
+    <h5>Valid</h5>
+    <pre>{{ 'object' | json }}</pre>
+
+    <!-- <h5>Términos</h5> -->
+    <!-- <pre>{{ myForm.controls?.terminos?.errors | json }}</pre> -->
+
+    <!-- <br>
+    <pre>Condiciones: </pre> -->
+</app-side-menu>

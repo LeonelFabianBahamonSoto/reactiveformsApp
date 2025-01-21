@@ -1,0 +1,112 @@
+<app-side-menu>
+    <h2>Reactivos: <small> Dinámicos </small></h2>
+    <hr>
+
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3">
+        <div class="sm:col-span-1 md:col-span-1 lg:col-span-1" style="background-color: gray;">
+            <span>Valid</span>
+            <pre>{{ dynamicForm.valid | json }}</pre>
+
+            <span>Pristine</span>
+            <pre>{{ dynamicForm.pristine| json }}</pre>
+
+            <span>Touched</span>
+            <pre>{{ dynamicForm.touched| json }}</pre>
+
+            <span>Value</span>
+            <pre>{{ dynamicForm.value| json }}</pre>
+
+            <!-- <span>Precio</span>
+            <pre>{{ dynamicForm.controls['price'].value | json }}</pre> -->
+
+            <!-- <span>Precio - Errors</span>
+            <div style="overflow: auto;">{{ dynamicForm.controls['price'].errors | json }}</div> -->
+
+            <!-- <span>Producto 1</span>
+            <div style="overflow: auto;">{{ dynamicForm.controls['name'].value | json }}</div> -->
+
+            <!-- <span>Producto</span>
+            <div>{{ dynamicForm.controls['name'].errors | json }}</div> -->
+        </div>
+
+        <div class="sm:col-span-1 md:col-span-2 lg:col-span-2">
+            <form [formGroup]="dynamicForm" (ngSubmit)="onSaveForm()" autocomplete="off" class="formContainer">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+
+                    <div class="sm:col-span-1 md:col-span-2 lg:col-span-4" style="display: flex; width: 100%; ">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre de la persona</mat-label>
+                            <input class="form-control" formControlName="personName" matInput placeholder="Nombre de la persona" type="text">
+
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'required'})">
+                                El nombre de la persona es requerido
+                            </mat-error>
+
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'minlength'})">
+                                El nombre de la persona requiere minimo 3 letras
+                            </mat-error>
+
+                            <mat-error *ngIf="isValidField({ theField: 'personName', theError: 'maxlength'})">
+                                El nombre de la persona requiere máximo de 20 letras
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-3">
+                        <div style="display: flex; flex-direction: row;">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Agregar juego favorito</mat-label>
+                                <input class="form-control" matInput type="text" placeholder="Nuevo juego favorito" type="text" [formControl]="newFavoriteGame" (input)="newFavoriteGame.markAsTouched()">
+
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['minlength']">
+                                    El nombre del juego requiere mínimo de 3 letras
+                                </mat-error>
+
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['maxlength']">
+                                    El nombre del juego requiere máximo de 15 letras
+                                </mat-error>
+
+                                <mat-error *ngIf="newFavoriteGame?.errors?.['required']">
+                                    El campo es requerido
+                                </mat-error>
+
+                            </mat-form-field>
+                            <button (click)="addFavoriteGame()" aria-label="Add favorite game" extended mat-fab type="button" [disabled]="newFavoriteGame.invalid" [ngClass]="{ unavailableButton : newFavoriteGame.invalid, availableButton: !newFavoriteGame.invalid}">
+                                Agregar
+                                <mat-icon>add_circle</mat-icon>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-2" formArrayName="favoriteGames">
+                        <div style="display: flex; flex-direction: row;" *ngFor="let favoriteGamesForm of favoriteGamesControl.controls; let i = index">
+                            <mat-form-field appearance="fill">
+
+                                <mat-label>Favorite Games</mat-label>
+                                <input class="form-control" matInput placeholder="Juego favorito" type="text" [formControlName]="i">
+
+                                <mat-error *ngIf="isValidFieldInArray( favoriteGamesControl, i )">
+                                    {{ messageErrorResponse }}
+                                </mat-error>
+                            </mat-form-field>
+
+                            <button mat-fab extended aria-label="Delete game" (click)="deleteItemFromArray(i)" style="background-color: #cc0002; width: 25%; margin-left: 2.5%;">
+                                Eliminar
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-4">
+                        <button mat-fab extended type="submit" style="background-color:#0066cc;">
+                            Guardar
+                            <mat-icon>save</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</app-side-menu>
