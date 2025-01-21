@@ -9,9 +9,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 
 export class DynamicPageComponent {
 
-    constructor( private fb: FormBuilder ) {
-        console.info('newFavoriteGame: ', this.newFavoriteGame?.value);
-    };
+    constructor( private fb: FormBuilder ) {};
 
     public minLengthFavoriteCharacters: number = 2;
     public maxLengthFavoriteCharacters: number = 15;
@@ -75,8 +73,6 @@ export class DynamicPageComponent {
             this.dynamicForm.markAllAsTouched();
             return;
         };
-
-        console.info('---> FORM: ', this.dynamicForm.value);
 
         this.dynamicForm.reset({
             personName: '',
