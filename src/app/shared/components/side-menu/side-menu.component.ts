@@ -19,4 +19,6 @@ export class SideMenuComponent {
   public sidebarValidations = [
     { label: 'Registro', icon: 'label',  url: '/auth/sign-up' }
   ];
+
+  public selectors = { label: 'Selectores anidados', icon: 'arrow_drop_down', url: '/selectors' };
 }

@@ -102,6 +102,16 @@
                         <span style="color: white;">{{ item.label }}</span>
                     </mat-list-item>
                 </mat-nav-list>
+
+                <mat-nav-list>
+                    Selectores Anidados
+                    <mat-list-item [routerLink]="selectors.url" (click)="sidenav.toggle()">
+                        <mat-icon id="buttonIcon" matListItemIcon>
+                            {{ selectors.icon }}
+                        </mat-icon>
+                        <span style="color: white;">{{ selectors.label }}</span>
+                    </mat-list-item>
+                </mat-nav-list>
             </div>
 
             <div class="buttonContainer">
