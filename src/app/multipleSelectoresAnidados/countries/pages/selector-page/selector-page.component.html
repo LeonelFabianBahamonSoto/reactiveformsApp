@@ -1,0 +1,50 @@
+<div id="container">
+    <h1 class="mt-3">Selectores Anidados</h1>
+
+    <div class="formContainer">
+        <form [formGroup]="myForm" action="" style="width: 50%;">
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+                <div [ngClass]="dynamicClasses">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Continentes</mat-label>
+                        <mat-select formControlName="region">
+                            <mat-option value="">--Seleccione una región--</mat-option>
+                            <mat-option *ngFor="let region of regions" [value]="region">{{ region }}</mat-option>
+                            <!-- <mat-option>Clear</mat-option> -->
+                            <!-- <mat-option value="">Africa</mat-option>
+                            <mat-option value="colombia">Colombia</mat-option> -->
+                        </mat-select>
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="sm:col-span-1 md:col-span-1 lg:col-span-1" *ngIf="countriesByRegion.length > 0">
+                    <mat-form-field>
+                        <mat-label>País</mat-label>
+                        <mat-select formControlName="country">
+                            <mat-option value="">--Seleccione un país--</mat-option>
+                            <mat-option *ngFor="let country of countriesByRegion" [value]="country.cca3">{{ country.name }}</mat-option>
+                        </mat-select>
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h3>Formulario</h3>
+        <code>
+            {{ myForm.value | json }}
+        </code>
+
+        <!-- <h3>Regiones</h3>
+        <code>
+            {{ myForm.get('region')?.value | json }}
+        </code> -->
+
+        <!-- <h3>Nombres: </h3>
+        <code>
+            {{ myForm.get('country')?.value | json }}
+        </code> -->
+    </div>
+</div>
