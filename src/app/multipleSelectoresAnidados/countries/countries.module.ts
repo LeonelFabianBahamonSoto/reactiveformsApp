@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 
 import { SelectorPageComponent } from './pages/selector-page/selector-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   declarations: [ SelectorPageComponent ],
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     CountriesRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-  ]
+    SharedModule
+]
 })
 export class CountriesModule { }
