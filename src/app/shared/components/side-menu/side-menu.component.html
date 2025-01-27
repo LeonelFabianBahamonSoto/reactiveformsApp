@@ -105,11 +105,13 @@
 
                 <mat-nav-list>
                     Selectores Anidados
-                    <mat-list-item [routerLink]="selectors.url" (click)="sidenav.toggle()">
+                    <mat-list-item *ngFor="let item of selectors" [routerLink]="item.url" (click)="sidenav.toggle()">
                         <mat-icon id="buttonIcon" matListItemIcon>
-                            {{ selectors.icon }}
+                            {{ item.icon }}
                         </mat-icon>
-                        <span style="color: white;">{{ selectors.label }}</span>
+                        <div class="buttonTitle">
+                            {{ item.label }}
+                        </div>
                     </mat-list-item>
                 </mat-nav-list>
             </div>

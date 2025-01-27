@@ -20,5 +20,8 @@ export class SideMenuComponent {
     { label: 'Registro', icon: 'label',  url: '/auth/sign-up' }
   ];
 
-  public selectors = { label: 'Selectores anidados', icon: 'arrow_drop_down', url: '/selectors' };
+  public selectors = [
+    { label: 'Productos', icon: 'inventory', url: '/lifeCycle/products' },
+    { label: 'Precios', icon: 'sell', url: '/lifeCycle/price' },
+  ];
 }

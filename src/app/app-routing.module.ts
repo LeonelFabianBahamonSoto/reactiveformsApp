@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./multipleSelectoresAnidados/multipleSelectoresAnidados.module').then( m => m.MultipleSelectoresAnidados )
   },
   {
+    path: 'lifeCycle',
+    loadChildren: () => import('./life-cycle/life-cycle.module').then( m => m.LifeCycleModule )
+  },
+  {
     path: '**',
     redirectTo: 'reactive/basic',
   },
