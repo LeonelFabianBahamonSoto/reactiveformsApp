@@ -19,6 +19,14 @@ const routes: Routes = [
     loadChildren: () => import('./life-cycle/life-cycle.module').then( m => m.LifeCycleModule )
   },
   {
+    path: 'standaloneAlonePage',
+    loadComponent: () => import('./standAlone/pages/alone-page/alone-page.component').then( m => m.AlonePageComponent )
+  },
+  {
+    path: 'standaloneCounter',
+    loadComponent: () => import('./standAlone/components/counter-alone/counter-alone.component').then( m => m.CounterAloneComponent )
+  },
+  {
     path: '**',
     redirectTo: 'reactive/basic',
   },
