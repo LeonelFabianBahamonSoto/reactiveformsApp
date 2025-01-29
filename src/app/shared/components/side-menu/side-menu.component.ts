@@ -24,4 +24,10 @@ export class SideMenuComponent {
     { label: 'Productos', icon: 'inventory', url: '/lifeCycle/products' },
     { label: 'Precios', icon: 'sell', url: '/lifeCycle/price' },
   ];
+
+  public standAloneItems = [
+    { label: 'Alone Component', icon: 'newspaper', url: '/standaloneAlonePage' },
+    { label: 'Counter', icon: 'add_circle', url: '/standaloneCounter' },
+  ]
+
 }

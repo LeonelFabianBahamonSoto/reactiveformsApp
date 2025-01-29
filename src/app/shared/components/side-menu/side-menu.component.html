@@ -114,6 +114,18 @@
                         </div>
                     </mat-list-item>
                 </mat-nav-list>
+
+                <mat-nav-list>
+                    Stand Alone Component
+                    <mat-list-item *ngFor="let item of standAloneItems" [routerLink]="item.url" (click)="sidenav.toggle()">
+                        <mat-icon id="buttonIcon" matListItemIcon>
+                            {{ item.icon }}
+                        </mat-icon>
+                        <div class="buttonTitle">
+                            {{ item.label }}
+                        </div>
+                    </mat-list-item>
+                </mat-nav-list>
             </div>
 
             <div class="buttonContainer">
