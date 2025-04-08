@@ -1,1 +1,24 @@
 <h1>price works - ${{currentPrice}}</h1>
+
+<br>
+<br>
+<hr>
+<hr>
+<br>
+
+<h1>NOMBRE: {{userName}}</h1>
+<input matInput placeholder="Ingrese nombre" type="text" style="border-width: 5px;" [(ngModel)]="userName" (ngModelChange)="change($event)">
+
+<h1>NOMBRE II: {{userNameDos}}</h1>
+<input matInput placeholder="Ingrese nombre" type="text" style="border-width: 5px;" [(ngModel)]="userNameDos" (ngModelChange)="change($event)">
+
+<br><br><br><br>
+
+<section>
+    <input matInput placeholder="Buscar ciudad" type="text" style="border-width: 5px;" [(ngModel)]="cityName" (ngModelChange)="findClimateByCity($event)">
+    <br>
+    <h1>Ciudad: {{climateByCity.name}}</h1>
+    <h1>Temperatura: {{climateByCity.temperature}}</h1>
+    <h1>Viento: {{climateByCity.wind}}</h1>
+    <h1>Humedad: {{climateByCity.humidity}}</h1>
+</section>

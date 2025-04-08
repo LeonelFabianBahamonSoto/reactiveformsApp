@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { PriceComponent } from './components/price/price.component';
 import { ProductsComponent } from './components/products/products.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ProductsComponent } from './components/products/products.component';
     LifeCycleRoutingModule,
     MaterialModule,
     SharedModule,
+    FormsModule,
   ]
 })
 export class LifeCycleModule { }
